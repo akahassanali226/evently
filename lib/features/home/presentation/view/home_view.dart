@@ -120,7 +120,7 @@ class _HomeViewState extends State<HomeView> {
                 onPressed: () {
                   Navigator.pushReplacementNamed(
                     context,
-                    RouteManager.loginRoute,
+                    RouteManager.onboardingRoute,
                   );
                 },
               ),
