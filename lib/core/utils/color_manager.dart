@@ -6,4 +6,6 @@ abstract final class ColorManager {
   static const Color primaryColor = Color(0xFF5669FF);
   static const Color lightBlackColor = Color(0xFF1C1C1C);
   static const Color darkWhiteColor = Color(0xFFF4EBDC);
+  static const Color redColor = Colors.red;
+  static const Color greyColor = Color(0xFF7B7B7B);
 }

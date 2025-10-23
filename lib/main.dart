@@ -3,8 +3,10 @@ import 'package:evently/core/providers/theme_provider.dart';
 import 'package:evently/core/source/local/prefs_manager.dart';
 import 'package:evently/core/utils/app_style.dart';
 import 'package:evently/core/utils/route_manager.dart';
+import 'package:evently/features/feed/presentation/view/feed_view.dart';
 import 'package:evently/features/home/presentation/view/home_view.dart';
 import 'package:evently/features/login/presentation/view/login_view.dart';
+import 'package:evently/features/register/presentation/view/register_view.dart';
 import 'package:evently/features/splash/presentation/view/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -46,6 +48,8 @@ class Evently extends StatelessWidget {
         RouteManager.homeRoute: (_) => HomeView(),
         RouteManager.splashRoute: (_) => SplashView(),
         RouteManager.loginRoute: (_) => LoginView(),
+        RouteManager.registerRoute: (_) => RegisterView(),
+        RouteManager.feedRoute: (_) => FeedView(),
       },
     );
   }

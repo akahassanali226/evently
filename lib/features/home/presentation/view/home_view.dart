@@ -3,13 +3,13 @@ import 'package:evently/core/providers/theme_provider.dart';
 import 'package:evently/core/source/local/prefs_manager.dart';
 import 'package:evently/core/utils/asset_manager.dart';
 import 'package:evently/core/utils/route_manager.dart';
-import 'package:evently/features/home/presentation/widgets/custom_elevated_button.dart';
-import 'package:evently/features/home/presentation/widgets/toggle_bar.dart';
+import 'package:evently/core/reusable_components/custom_elevated_button.dart';
+import 'package:evently/core/reusable_components/toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
-  HomeView({super.key});
+  const HomeView({super.key});
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -17,19 +17,17 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   String selectedLangguage = "en";
-
   List<String> languageValues = ["en", "ar"];
-
   String selectedTheme = "Light";
-
   List<String> themeValues = ["Light", "Dark"];
 
   @override
   Widget build(BuildContext context) {
-    String selectedLangguage = context.locale.languageCode;
+    ThemeProvider provider = Provider.of<ThemeProvider>(context);
+    selectedLangguage = context.locale.languageCode;
+    provider.mode == ThemeMode.dark ? selectedTheme = "Dark" : "Light";
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    ThemeProvider provider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -60,43 +58,65 @@ class _HomeViewState extends State<HomeView> {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               SizedBox(height: height * 0.02),
-              ToggleBar(
-                title: "Language",
-                selected: selectedLangguage,
-                selectedValues: languageValues,
-                icon1: AssetManager.usIconUrl,
-                icon2: AssetManager.egIconUrl,
-                onChanged: (value) {
-                  setState(() {
-                    selectedLangguage = value;
-                    context.setLocale(Locale(selectedLangguage));
-                  });
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Language".tr(),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  ToggleSwitch(
+                    selected: selectedLangguage,
+                    selectedValues: languageValues,
+                    icon1: AssetManager.usIconUrl,
+                    icon2: AssetManager.egIconUrl,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedLangguage = value;
+                        context.setLocale(Locale(selectedLangguage));
+                      });
+                    },
+                  ),
+                ],
               ),
               SizedBox(height: height * 0.02),
-              ToggleBar(
-                title: "Theme",
-                selected: selectedTheme,
-                selectedValues: themeValues,
-                icon1: AssetManager.sunIconUrl,
-                icon2: AssetManager.moonIconUrl,
-                isColored: true,
-                onChanged: (value) {
-                  setState(() {
-                    selectedTheme = value;
-                  });
-                  if (selectedTheme == "Light") {
-                    provider.changeTheme(ThemeMode.light);
-                    PrefsManager.setTheme(ThemeMode.light);
-                  } else {
-                    provider.changeTheme(ThemeMode.dark);
-                    PrefsManager.setTheme(ThemeMode.dark);
-                  }
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Theme".tr(),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  ToggleSwitch(
+                    selected: selectedTheme,
+                    selectedValues: themeValues,
+                    icon1: AssetManager.sunIconUrl,
+                    icon2: AssetManager.moonIconUrl,
+                    isColored: true,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedTheme = value;
+                      });
+                      if (selectedTheme == "Light") {
+                        provider.changeTheme(ThemeMode.light);
+                        PrefsManager.setTheme(ThemeMode.light);
+                      } else {
+                        provider.changeTheme(ThemeMode.dark);
+                        PrefsManager.setTheme(ThemeMode.dark);
+                      }
+                    },
+                  ),
+                ],
               ),
+
               Spacer(),
               CustomElevatedButton(
                 title: "Let's Start",
+
                 onPressed: () {
                   Navigator.pushReplacementNamed(
                     context,
