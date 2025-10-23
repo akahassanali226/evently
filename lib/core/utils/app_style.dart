@@ -8,6 +8,8 @@ class AppStyle {
     colorScheme: ColorScheme.light(
       primary: ColorManager.primaryColor,
       secondary: ColorManager.lightBlackColor,
+      error: ColorManager.redColor,
+      tertiary: ColorManager.greyColor,
     ),
     textTheme: TextTheme(
       bodyMedium: TextStyle(
@@ -20,6 +22,13 @@ class AppStyle {
         fontWeight: FontWeight.w500,
         color: ColorManager.lightBlackColor,
       ),
+      labelSmall: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: ColorManager.primaryColor,
+        decoration: TextDecoration.underline,
+        decorationColor: ColorManager.primaryColor,
+      ),
     ),
   );
   static ThemeData darkTheme = ThemeData(
@@ -28,6 +37,8 @@ class AppStyle {
     colorScheme: ColorScheme.dark(
       primary: ColorManager.primaryColor,
       secondary: ColorManager.darkWhiteColor,
+      error: ColorManager.redColor,
+      tertiary: ColorManager.greyColor,
     ),
     textTheme: TextTheme(
       bodyMedium: TextStyle(
@@ -39,6 +50,13 @@ class AppStyle {
         fontSize: 16,
         fontWeight: FontWeight.w500,
         color: ColorManager.darkWhiteColor,
+      ),
+      labelSmall: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: ColorManager.primaryColor,
+        decoration: TextDecoration.underline,
+        decorationColor: ColorManager.primaryColor,
       ),
     ),
   );

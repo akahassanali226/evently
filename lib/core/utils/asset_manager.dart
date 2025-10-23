@@ -9,4 +9,8 @@ abstract final class AssetManager {
   static const String egIconUrl = "assets/icons/eg.svg";
   static const String sunIconUrl = "assets/icons/sun.svg";
   static const String moonIconUrl = "assets/icons/moon.svg";
+  static const String messageIconUrl = "assets/icons/message.svg";
+  static const String lockIconUrl = "assets/icons/lock.svg";
+  static const String googleIconUrl = "assets/icons/google.svg";
+  static const String nameIconUrl = "assets/icons/name.svg";
 }

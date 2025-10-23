@@ -3,5 +3,26 @@
     "Choose your preferred theme and language to get started with a comfortable, tailored experience that suits your style." : "Choose your preferred theme and language to get started with a comfortable, tailored experience that suits your style.",
     "Language": "Language",
     "Theme": "Theme",
-    "Let's Start" : "Let's Start"
+    "Let's Start" : "Let's Start",
+    "Email": "Email",
+    "Password" : "Password",
+    "Forgot Password?" : "Forgot Password?",
+    "Login" : "Login",
+    "Don't Have Account ?" : "Don't Have Account ?",
+    "Create Account" : " Create Account",
+    "Login With Google" : "Login With Google",
+    "Register" : "Register",
+    "Or" : "Or",
+    "Name" : "Name",
+    "Re Password" : "Re Password",
+    "Already Have Account ?" : "Already Have Account ?",
+    "Reset Password" : "Reset Password",
+    "This Field can't be Empty" : "This Field can't be Empty",
+    "Please enter a valid email" : "Please enter a valid email",
+    "Password must be at least 8 characters,\n include uppercase, lowercase, number, and special character." :"Password must be at least 8 characters,\n include uppercase, lowercase, number, and special character.",
+    "Password Dosen't Match" : "Password Dosen't Match",
+    "Please enter a valid userName" : "Please enter a valid userName",
+    "Name must be between 3 to 10 letters" : "Name must be between 3 to 10 letters",
+    "Enter a valid phone number" : "Enter a valid phone number"
+    
 }

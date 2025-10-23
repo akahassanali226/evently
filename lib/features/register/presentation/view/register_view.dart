@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/reusable_components/custom_elevated_button.dart';
 import 'package:evently/core/reusable_components/custom_text_form_field.dart';
-import 'package:evently/core/reusable_components/row_elevated_button.dart';
 import 'package:evently/core/reusable_components/toggle_switch.dart';
 import 'package:evently/core/utils/asset_manager.dart';
 import 'package:evently/core/utils/route_manager.dart';
@@ -9,14 +8,14 @@ import 'package:evently/core/validation/app_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegisterViewState extends State<RegisterView> {
   String selectedLangguage = "en";
 
   List<String> languageValues = ["en", "ar"];
@@ -24,13 +23,27 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     selectedLangguage = context.locale.languageCode;
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+    TextEditingController rePasswordController = TextEditingController();
+    TextEditingController nameController = TextEditingController();
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        scrolledUnderElevation: 0,
+
+        foregroundColor: Theme.of(context).colorScheme.primary,
+        centerTitle: true,
+        title: Text(
+          "Register".tr(),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -46,6 +59,22 @@ class _LoginViewState extends State<LoginView> {
                     fit: BoxFit.fitWidth,
                   ),
                   SizedBox(height: height * 0.05),
+                  CustomTextFormField(
+                    textInputAction: TextInputAction.next,
+                    textInputType: TextInputType.name,
+                    validator: (name) => AppValidation.nameValidation(name),
+                    hintText: "Name".tr(),
+                    controller: nameController,
+                    icon: Padding(
+                      padding: EdgeInsetsGeometry.all(10),
+                      child: SvgPicture.asset(
+                        AssetManager.nameIconUrl,
+
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: height * 0.02),
                   CustomTextFormField(
                     textInputAction: TextInputAction.next,
                     textInputType: TextInputType.name,
@@ -80,17 +109,30 @@ class _LoginViewState extends State<LoginView> {
                     isPassword: true,
                   ),
                   SizedBox(height: height * 0.02),
-                  Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: Text(
-                      "Forgot Password?".tr(),
-                      style: Theme.of(context).textTheme.labelSmall,
+                  CustomTextFormField(
+                    textInputAction: TextInputAction.next,
+                    textInputType: TextInputType.name,
+                    validator: (rePassword) =>
+                        AppValidation.rePasswordValidation(
+                          password: passwordController.text,
+                          rePassword: rePassword,
+                        ),
+                    hintText: "Re Password".tr(),
+                    controller: rePasswordController,
+                    icon: Padding(
+                      padding: EdgeInsetsGeometry.all(10),
+                      child: SvgPicture.asset(
+                        AssetManager.lockIconUrl,
+
+                        fit: BoxFit.fitWidth,
+                      ),
                     ),
+                    isPassword: true,
                   ),
                   SizedBox(height: height * 0.02),
 
                   CustomElevatedButton(
-                    title: "Login".tr(),
+                    title: "Register".tr(),
 
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
@@ -103,7 +145,7 @@ class _LoginViewState extends State<LoginView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Don't Have Account ?".tr(),
+                        "Already Have Account ?".tr(),
                         style: Theme.of(context).textTheme.labelSmall!.copyWith(
                           color: Theme.of(context).colorScheme.secondary,
                           decorationColor: Theme.of(
@@ -113,49 +155,17 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            RouteManager.registerRoute,
-                          );
+                          Navigator.pop(context);
                         },
                         child: Text(
-                          "Create Account".tr(),
+                          "Login".tr(),
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                       ),
                     ],
                   ),
                   SizedBox(height: height * 0.02),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          color: Theme.of(context).colorScheme.primary,
-                          indent: 30,
-                          endIndent: 30,
-                        ),
-                      ),
-                      Text(
-                        "Or".tr(),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      Expanded(
-                        child: Divider(
-                          color: Theme.of(context).colorScheme.primary,
-                          indent: 30,
-                          endIndent: 30,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: height * 0.02),
 
-                  RowElevatedButton(
-                    title: "Login With Google".tr(),
-
-                    onPressed: () {},
-                  ),
-                  SizedBox(height: height * 0.02),
                   ToggleSwitch(
                     selected: selectedLangguage,
                     selectedValues: languageValues,
