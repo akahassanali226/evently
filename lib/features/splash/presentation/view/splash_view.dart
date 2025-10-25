@@ -1,3 +1,4 @@
+import 'package:evently/core/source/local/prefs_manager.dart';
 import 'package:evently/core/utils/asset_manager.dart';
 import 'package:evently/core/utils/route_manager.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,17 @@ class SplashView extends StatelessWidget {
             Image.asset(AssetManager.logoHeaderUrl, width: width * 0.4)
                 .animate(
                   onComplete: (controller) {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      RouteManager.homeRoute,
-                    );
+                    if (PrefsManager.getOnboardingView()) {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        RouteManager.loginRoute,
+                      );
+                    } else {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        RouteManager.homeRoute,
+                      );
+                    }
                   },
                 )
                 .fadeIn(duration: 3000.ms)
@@ -30,10 +38,17 @@ class SplashView extends StatelessWidget {
             Image.asset(AssetManager.logoBottomUrl, width: width * 0.4)
                 .animate(
                   onComplete: (controller) {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      RouteManager.homeRoute,
-                    );
+                    if (PrefsManager.getOnboardingView()) {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        RouteManager.loginRoute,
+                      );
+                    } else {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        RouteManager.homeRoute,
+                      );
+                    }
                   },
                 )
                 .fadeIn(duration: 3000.ms)

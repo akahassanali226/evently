@@ -21,4 +21,12 @@ class PrefsManager {
       return ThemeMode.dark;
     }
   }
+
+  static setOnboardingView() async {
+    await prefs.setBool("onboarding", true);
+  }
+
+  static bool getOnboardingView() {
+    return prefs.getBool("onboarding") ?? false;
+  }
 }

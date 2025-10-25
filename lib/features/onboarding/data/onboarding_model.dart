@@ -16,21 +16,21 @@ class OnboardingModel {
     return [
       OnboardingModel(
         imageUrl: AssetManager.bothOnboarding1Url,
-        title: "onboarding1Title".tr(),
+        title: "onboarding1Title",
         description: "onboarding1Description".tr(),
       ),
       OnboardingModel(
         imageUrl: isDark
             ? AssetManager.darkboarding2Url
             : AssetManager.lightboarding2Url,
-        title: "onboarding2Title".tr(),
+        title: "onboarding2Title",
         description: "onboarding2Description".tr(),
       ),
       OnboardingModel(
         imageUrl: isDark
             ? AssetManager.darkboarding3Url
             : AssetManager.lightboarding3Url,
-        title: "onboarding3Title".tr(),
+        title: "onboarding3Title",
         description: "onboarding3Description".tr(),
       ),
     ];

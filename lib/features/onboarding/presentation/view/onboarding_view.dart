@@ -59,6 +59,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                 onboardingModel: onboardingModelList[pageIndex],
                 controller: controller,
               ),
+              SizedBox(height: height * 0.01),
             ],
           ),
         ),
@@ -66,4 +67,3 @@ class _OnboardingViewState extends State<OnboardingView> {
     );
   }
 }
-
