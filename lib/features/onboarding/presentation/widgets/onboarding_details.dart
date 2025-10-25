@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/features/onboarding/data/onboarding_model.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class OnboardingDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          onboardingModel.title,
+          onboardingModel.title.tr(),
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),

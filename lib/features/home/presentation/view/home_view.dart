@@ -117,13 +117,15 @@ class _HomeViewState extends State<HomeView> {
               CustomElevatedButton(
                 title: "Let's Start",
 
-                onPressed: () {
+                onPressed: () async {
+                  await PrefsManager.setOnboardingView();
                   Navigator.pushReplacementNamed(
                     context,
                     RouteManager.onboardingRoute,
                   );
                 },
               ),
+              SizedBox(height: height * 0.01),
             ],
           ),
         ),

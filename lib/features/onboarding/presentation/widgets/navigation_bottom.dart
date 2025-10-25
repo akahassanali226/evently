@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:evently/core/providers/theme_provider.dart';
+import 'package:evently/core/source/local/prefs_manager.dart';
 import 'package:evently/core/utils/route_manager.dart';
 import 'package:evently/features/onboarding/data/onboarding_model.dart';
 import 'package:evently/features/onboarding/presentation/widgets/navigation_button.dart';
@@ -82,7 +83,8 @@ class _NavigationBottomState extends State<NavigationBottom> {
               ? NavigationButton(
                   icon: Icon(Icons.done),
 
-                  onPressed: () {
+                  onPressed: () async {
+                    await PrefsManager.setOnboardingView();
                     Navigator.pushReplacementNamed(
                       context,
                       RouteManager.loginRoute,
