@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/reusable_components/custom_elevated_button.dart';
 import 'package:evently/core/reusable_components/custom_text_form_field.dart';
@@ -6,8 +8,10 @@ import 'package:evently/core/reusable_components/toggle_switch.dart';
 import 'package:evently/core/utils/asset_manager.dart';
 import 'package:evently/core/utils/route_manager.dart';
 import 'package:evently/core/validation/app_validation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -20,6 +24,9 @@ class _LoginViewState extends State<LoginView> {
   String selectedLangguage = "en";
 
   List<String> languageValues = ["en", "ar"];
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +34,7 @@ class _LoginViewState extends State<LoginView> {
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -94,7 +99,7 @@ class _LoginViewState extends State<LoginView> {
 
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        Navigator.pushNamed(context, RouteManager.feedRoute);
+                        emailLogin();
                       }
                     },
                   ),
@@ -153,7 +158,9 @@ class _LoginViewState extends State<LoginView> {
                   RowElevatedButton(
                     title: "Login With Google".tr(),
 
-                    onPressed: () {},
+                    onPressed: () {
+                      googleLogin();
+                    },
                   ),
                   SizedBox(height: height * 0.02),
                   ToggleSwitch(
@@ -175,5 +182,49 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
+  }
+
+  emailLogin() async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      log("jijm,");
+      Navigator.pushNamed(context, RouteManager.feedRoute);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+
+  googleLogin() async {
+    // Google Sign-in
+
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+
+      final googleCredential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      final credential = await FirebaseAuth.instance.signInWithCredential(
+        googleCredential,
+      );
+      log("jijm,");
+      Navigator.pushNamed(context, RouteManager.feedRoute);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
   }
 }
