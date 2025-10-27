@@ -118,14 +118,13 @@ class _HomeViewState extends State<HomeView> {
                 title: "Let's Start",
 
                 onPressed: () async {
-                  await PrefsManager.setOnboardingView();
                   Navigator.pushReplacementNamed(
                     context,
                     RouteManager.onboardingRoute,
                   );
                 },
               ),
-              SizedBox(height: height * 0.01),
+              SizedBox(height: height * 0.02),
             ],
           ),
         ),

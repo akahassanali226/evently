@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/reusable_components/custom_elevated_button.dart';
 import 'package:evently/core/reusable_components/custom_text_form_field.dart';
@@ -5,6 +7,7 @@ import 'package:evently/core/reusable_components/toggle_switch.dart';
 import 'package:evently/core/utils/asset_manager.dart';
 import 'package:evently/core/utils/route_manager.dart';
 import 'package:evently/core/validation/app_validation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -19,18 +22,20 @@ class _RegisterViewState extends State<RegisterView> {
   String selectedLangguage = "en";
 
   List<String> languageValues = ["en", "ar"];
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController rePasswordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     selectedLangguage = context.locale.languageCode;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController rePasswordController = TextEditingController();
-    TextEditingController nameController = TextEditingController();
+
     return Scaffold(
+      drawerEnableOpenDragGesture: true,
       appBar: AppBar(
         elevation: 0,
         scrolledUnderElevation: 0,
@@ -136,7 +141,7 @@ class _RegisterViewState extends State<RegisterView> {
 
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        Navigator.pushNamed(context, RouteManager.feedRoute);
+                        emailSignUp();
                       }
                     },
                   ),
@@ -185,5 +190,25 @@ class _RegisterViewState extends State<RegisterView> {
         ),
       ),
     );
+  }
+
+  emailSignUp() async {
+    try {
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: emailController.text,
+            password: passwordController.text,
+          );
+      log("Email Created");
+      Navigator.pushNamed(context, RouteManager.feedRoute);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }
